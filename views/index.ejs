@@ -3,13 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= title %>
-    </title>
+    <title>Webshop</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1><%= title %></h1>
-    Hello EJS!
+    <h1>Termékek</h1>
+    <form>
+        <input type="radio" id="Fridge" name="product" value="Fridge">
+        <label for="Fridge"><img src="/Fridge.png" alt="Hűtőszekrény" height="200px" width="250px"> <br> <p>Átlagos hűtőszekrény - 149999Ft</p></label>
+        <input type="radio" id="HairDryer" name="product" value="HairDryer">
+        <label for="HairDryer"><img src="/HairDryer.png" alt="Hajszárító" height="200px" width="250px"> <br> <p>Rossz hajszárító - 7999Ft</p></label>
+        <input type="radio" id="VacuumCleaner" name="product" value="VacuumCleaner">
+        <label for="VacuumCleaner"><img src="/VacuumCleaner.png" alt="Porszívó" height="200px" width="250px"> <br> <p>Menő porszívó - 14999Ft</p></label>
+    </form>
+    <h2>Rendelés leadása</h2>
+    <form method="post">
+        <label>Név: 
+            <input type="text" name="name" required>
+        </label> <br>
+        <label>Számlázási cím: 
+            <input type="text" name="taxingTitle" required>
+        </label> <br>
+        <label>Szállítási cím: 
+            <input type="text" name="deliveryTitle" required>
+        </label> <br>
+        <label>Telefonszám: 
+            <input type="text" name="phoneNumber" required>
+        </label> <br>
+        <label>Kuponkód: 
+            <input type="text" name="couponCode">
+        </label> <br>
+        <label>Bankkártya szám: 
+            <input type="text" name="bankCardNumber" required>
+        </label> <br>
+        <label>Lejárati dátum: 
+            <input type="text" name="expDate" required>
+        </label> <br>
+        <label>Biztonsági kód: 
+            <input type="number" name="secCode" required>
+        </label> <br>
+        <% if (locals.error) { %>
+            <p> <%= locals.error %></p>
+            <% } %>
+        <button type="submit">Rendelés leadása</button>
+    </form>
 </body>
 </html>
