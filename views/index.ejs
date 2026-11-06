@@ -1,51 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webshop</title>
     <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
     <h1>Termékek</h1>
-    <form>
-        <input type="radio" id="Fridge" name="product" value="Fridge">
-        <label for="Fridge"><img src="/Fridge.png" alt="Hűtőszekrény" height="200px" width="250px"> <br> <p>Átlagos hűtőszekrény - 149999Ft</p></label>
-        <input type="radio" id="HairDryer" name="product" value="HairDryer">
-        <label for="HairDryer"><img src="/HairDryer.png" alt="Hajszárító" height="200px" width="250px"> <br> <p>Rossz hajszárító - 7999Ft</p></label>
-        <input type="radio" id="VacuumCleaner" name="product" value="VacuumCleaner">
-        <label for="VacuumCleaner"><img src="/VacuumCleaner.png" alt="Porszívó" height="200px" width="250px"> <br> <p>Menő porszívó - 14999Ft</p></label>
-    </form>
-    <h2>Rendelés leadása</h2>
-    <form method="post">
-        <label>Név: 
-            <input type="text" name="name" required>
-        </label> <br>
-        <label>Számlázási cím: 
-            <input type="text" name="taxingTitle" required>
-        </label> <br>
-        <label>Szállítási cím: 
-            <input type="text" name="deliveryTitle" required>
-        </label> <br>
-        <label>Telefonszám: 
-            <input type="text" name="phoneNumber" required>
-        </label> <br>
-        <label>Kuponkód: 
-            <input type="text" name="couponCode">
-        </label> <br>
-        <label>Bankkártya szám: 
-            <input type="text" name="bankCardNumber" required>
-        </label> <br>
-        <label>Lejárati dátum: 
-            <input type="text" name="expDate" required>
-        </label> <br>
-        <label>Biztonsági kód: 
-            <input type="number" name="secCode" required>
-        </label> <br>
-        <% if (locals.error) { %>
-            <p> <%= locals.error %></p>
+    <% const data=locals.formData || {}; %>
+        <% if (locals.success) { %>
+            <h2 style="color: green;">Sikeres rendelés!</h2>
             <% } %>
-        <button type="submit">Rendelés leadása</button>
-    </form>
+                <% if (locals.error) { %>
+                    <p style="color: red;">
+                        <%= locals.error %>
+                    </p>
+                    <% } %>
+                        <h2>Rendelés leadása</h2>
+                        <form method="post" action="/">
+                            <h3>Termék kiválasztása</h3>
+                            <label>
+                                <input type="radio" name="product" value="Fridge" <%=data.product==='Fridge' ? 'checked'
+                                    : '' %> required>
+                                <img src="/Fridge.png" alt="Hűtőszekrény" height="200" width="250">
+                                <p>Átlagos hűtőszekrény - 149999 Ft</p>
+                            </label>
+                            <label>
+                                <input type="radio" name="product" value="HairDryer" <%=data.product==='HairDryer'
+                                    ? 'checked' : '' %>>
+                                <img src="/HairDryer.png" alt="Hajszárító" height="200" width="250">
+
+                                <p>Rossz hajszárító - 7999 Ft</p>
+                            </label>
+                            <label>
+                                <input type="radio" name="product" value="VacuumCleaner"
+                                    <%=data.product==='VacuumCleaner' ? 'checked' : '' %>>
+                                <img src="/VacuumCleaner.png" alt="Porszívó" height="200" width="250">
+                                <p>Menő porszívó - 14999 Ft</p>
+                            </label>
+                            <hr>
+                            <h3>Személyes adatok</h3>
+                            <label>Név:
+                                <input type="text" name="name" value="<%= data.name || '' %>" required>
+                            </label>
+                            <br>
+                            <h3>Számlázási cím</h3>
+                            <label>Város:
+                                <input type="text" name="billingCity" value="<%= data.billingCity || '' %>" required>
+                            </label>
+                            <br>
+                            <label>Irányítószám:
+                                <input type="text" name="billingZip" value="<%= data.billingZip || '' %>" maxlength="4"
+                                    required>
+                            </label>
+                            <br>
+                            <label>Utca és házszám:
+                                <input type="text" name="billingStreet" value="<%= data.billingStreet || '' %>"
+                                    required>
+                            </label>
+                            <br>
+                            <h3>Szállítási cím</h3>
+                            <label>Város:
+                                <input type="text" name="deliveryCity" value="<%= data.deliveryCity || '' %>" required>
+                            </label>
+                            <br>
+                            <label>Irányítószám:
+                                <input type="text" name="deliveryZip" value="<%= data.deliveryZip || '' %>"
+                                    maxlength="4" required>
+                            </label>
+                            <br>
+                            <label>Utca és házszám:
+                                <input type="text" name="deliveryStreet" value="<%= data.deliveryStreet || '' %>"
+                                    required>
+                            </label>
+                            <br>
+                            <h3>Elérhetőség</h3>
+                            <label>Telefonszám:
+                                <input type="text" name="phoneNumber" value="<%= data.phoneNumber || '' %>"
+                                    placeholder="+36301234567" required>
+                            </label>
+                            <br>
+                            <label>Kuponkód:
+                                <input type="text" name="couponCode" value="<%= data.couponCode || '' %>"
+                                    placeholder="PT-1255">
+                            </label>
+                            <br>
+                            <h3>Fizetési adatok</h3>
+                            <label>Bankkártya szám:
+                                <input type="text" name="bankCardNumber" placeholder="1234-5678-1234-5678" required>
+                            </label>
+                            <br>
+                            <label>Lejárati dátum:
+                                <input type="text" name="expDate" placeholder="MM/ÉÉ" required>
+                            </label>
+                            <br>
+                            <label>Biztonsági kód:
+                                <input type="password" name="secCode" maxlength="3" required>
+                            </label>
+                            <br>
+                            <br>
+                            <button type="submit">Rendelés leadása</button>
+                        </form>
 </body>
+
 </html>

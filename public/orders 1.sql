@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS orders;
+CREATE TABLE orders (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    product VARCHAR(1000) NOT NULL,
+    customerName VARCHAR(1000) NOT NULL,
+    billingAddress VARCHAR(1000) NOT NULL,
+    shippingAddress VARCHAR(1000) NOT NULL
+);
